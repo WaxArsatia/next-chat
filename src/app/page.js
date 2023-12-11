@@ -1,7 +1,15 @@
-import ButtonComponent from "@/components/ButtonComponent";
+import SignInButton from "@/components/SignInButton";
 import { Image } from "@nextui-org/react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-function Home() {
+async function Home() {
+  const session = await getServerSession();
+
+  if (session) {
+    return redirect("/chat");
+  }
+
   return (
     <div className="h-screen bg-slate-200">
       <div className="container mx-auto">
@@ -10,7 +18,7 @@ function Home() {
             <span className="text-4xl font-bold text-blue-700">NTMP</span>
           </div>
           <div>
-            <ButtonComponent>Open Chat</ButtonComponent>
+            <SignInButton>Open Chat</SignInButton>
           </div>
         </div>
         <div className="flex items-center justify-between py-24">
@@ -37,7 +45,7 @@ function Home() {
               </span>
             </div>
             <div className="py-4">
-              <ButtonComponent>Get Started</ButtonComponent>
+              <SignInButton>Get Started</SignInButton>
             </div>
           </div>
           <div className="flex items-center justify-center w-full">
