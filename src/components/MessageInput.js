@@ -1,39 +1,50 @@
 "use client";
 
-import { Button, Input } from "@nextui-org/react";
+import { socket } from "@/utils/socket";
+import { Button, Textarea } from "@nextui-org/react";
 import { useState } from "react";
 import { BsSendFill } from "react-icons/bs";
-import { io } from "socket.io-client";
 
-function MessageInput({ name }) {
+function MessageInput({ name, image }) {
   const [currentMessage, setCurrentMessage] = useState("");
-
-  const socket = io("http://localhost:3001");
 
   const sendMessage = () => {
     if (currentMessage === "" || currentMessage.trim() === "") return;
 
-    socket.emit("message", { from: name, message: currentMessage.trim() });
+    socket.emit("message", {
+      senderName: name,
+      senderImage: image,
+      message: currentMessage.trim(),
+    });
 
     setCurrentMessage("");
   };
 
+  const onTextareaKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <div className="flex w-full gap-4">
-      <Input
+      <Textarea
         placeholder="Type your message here..."
         value={currentMessage}
-        onChange={(e) => setCurrentMessage(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+        onValueChange={setCurrentMessage}
+        onKeyDown={onTextareaKeyDown}
+        minRows={1}
+        size="lg"
+        cacheMeasurements
       />
       <div className="flex items-center justify-center">
         <Button
           color="primary"
-          variant="shadow"
           radius="full"
           isIconOnly
           size="lg"
-          onClick={sendMessage}
+          onClick={() => sendMessage()}
         >
           <BsSendFill size={25} />
         </Button>

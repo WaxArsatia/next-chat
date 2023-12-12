@@ -1,14 +1,7 @@
 import MessageBody from "@/components/MessageBody";
 import MessageInput from "@/components/MessageInput";
 import SignOutButton from "@/components/SignOutButton";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Image,
-} from "@nextui-org/react";
+import { Avatar, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -27,12 +20,10 @@ async function Chat() {
             <Card>
               <CardBody>
                 <div className="flex items-center justify-center w-full gap-2">
-                  <Image
+                  <Avatar
                     src={session.user.image}
-                    alt="User Photo Profile"
-                    radius="full"
-                    width={70}
-                    height={70}
+                    name={session.user.name}
+                    size="lg"
                   />
                   <span className="text-2xl font-medium">
                     {session.user.name}
@@ -45,7 +36,7 @@ async function Chat() {
             <SignOutButton>Sign Out</SignOutButton>
           </div>
         </div>
-        <div className="w-full h-full px-8">
+        <div className="flex flex-col w-full h-full gap-4 px-8">
           <Card className="h-full">
             <CardHeader>
               <div className="flex flex-col w-full gap-2">
@@ -54,15 +45,13 @@ async function Chat() {
               </div>
             </CardHeader>
             <CardBody>
-              <MessageBody />
+              <MessageBody
+                name={session.user.name}
+                image={session.user.image}
+              />
             </CardBody>
-            <CardFooter>
-              <div className="flex flex-col w-full gap-4">
-                <Divider />
-                <MessageInput name={session.user.name} />
-              </div>
-            </CardFooter>
           </Card>
+          <MessageInput name={session.user.name} image={session.user.image} />
         </div>
       </div>
     </div>
