@@ -1,15 +1,7 @@
 import SignInButton from "@/components/SignInButton";
 import { Image } from "@nextui-org/react";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 async function Home() {
-  const session = await getServerSession();
-
-  if (session) {
-    return redirect("/chat");
-  }
-
   return (
     <div className="h-screen bg-slate-200">
       <div className="container mx-auto">
@@ -36,9 +28,9 @@ async function Home() {
                 tersimpan di database maupun server, pesan hanya dapat
                 dikirimkan kepada user yang sedang online, dan pesan akan hilang
                 tiap reload page. Project ini hanya ide iseng yang muncul disaat
-                Denis Arsyatya a.k.a{" "}
+                gabut Denis Arsyatya a.k.a{" "}
                 <span className="font-semibold text-blue-700">WaxArsatia</span>{" "}
-                gabut :)
+                :)
               </p>
               <span className="text-slate-600 text-large">
                 (Note: Project ini sama sekali tidak menggunakan database)
@@ -50,6 +42,7 @@ async function Home() {
           </div>
           <div className="flex items-center justify-center w-full">
             <Image
+              height={500}
               width={500}
               src="/undraw_mobile_messages.svg"
               alt="Hero Section Image"
