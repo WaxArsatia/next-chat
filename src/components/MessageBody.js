@@ -62,8 +62,8 @@ function MessageBody({ name, image }) {
               <Avatar src={senderImage} name={senderName} size="small" />
               <div>
                 <span className="font-semibold">{senderName}</span>
-                <Card className="max-w-md bg-slate-600">
-                  <CardBody className="flex flex-row flex-wrap justify-end gap-2">
+                <Card className="max-w-md bg-slate-600 w-fit">
+                  <CardBody className="flex flex-row flex-wrap justify-between gap-2">
                     <div className="w-full max-w-fit">
                       <span className="text-white whitespace-pre-wrap">
                         {message}
